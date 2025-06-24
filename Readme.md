@@ -1,5 +1,9 @@
 # SuperStore sales Dashboard 
 This project is an end-to-end interactive data visualization and analysis tool built using Python, Streamlit, Pandas, Seaborn, Matplotlib, and scikit-learn. It analyzes a fictional retail store's historical performance using the Sample Superstore dataset.
+- A Jupyter Notebook for data exploration and customer segmentation using machine learning.
+
+- An interactive Streamlit dashboard to visualize sales, profits, and discounts dynamically.
+
 
 
 ## Overview
@@ -13,6 +17,7 @@ This project is an end-to-end interactive data visualization and analysis tool b
 - **Total Samples:** 9994
 - **Features:** 21
 - No missing values found in dataset 
+- Time span: 2014-2017
 ## Dashboard Features (Streamlit)
 ### Filters
 - Year Selector: 2014, 2015, 2016, 2017
