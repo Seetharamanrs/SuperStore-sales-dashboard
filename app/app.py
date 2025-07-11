@@ -39,9 +39,10 @@ monthly_sales = (
 )
 
 st.subheader(" Monthly Sales Trend")
-fig1, ax1 = plt.subplots(figsize=(10, 4))
+fig1, ax1 = plt.subplots(figsize=(10, 2))
 sns.lineplot(data=monthly_sales, x='YearMonth', y='Sales', marker='o', ax=ax1)
 plt.xticks(rotation=45)
+plt.grid(True)
 st.pyplot(fig1)
 st.subheader(" Region-wise Sales Distribution")
 region_sales = filtered_df.groupby('Region')['Sales'].sum().reset_index()
