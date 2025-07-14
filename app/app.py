@@ -1,26 +1,37 @@
 import streamlit as st
+import io
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
+import time
+
+
 
 st.set_page_config(page_title="Superstore Dashboard", layout="wide")
 st.title("Superstore Sales Dashboard")
+
+@st.cache_data
 def load_data():
     path=r"D:\my_git\SuperStore-sales-dahsboard\data\Sample - Superstore.xls"
     df = pd.read_excel(path)
     df['Order Date'] = pd.to_datetime(df['Order Date'])
     df['YearMonth'] = df['Order Date'].dt.to_period('M').astype(str)
     return df
+
 df =load_data()
 st.sidebar.header("Filters")
 years = sorted(df['Order Date'].dt.year.unique())
 regions = df['Region'].unique()
 year_filter = st.sidebar.selectbox("Select Year", years)
-region_filter = st.sidebar.multiselect("Select Region", regions, default=list(regions))
+region_filter = st.sidebar.multiselect("Select Region", regions, default=[])
+categories = df['Category'].unique()
+category_filter = st.sidebar.multiselect("Select Category", categories, default=[])
 filtered_df = df[
     (df['Order Date'].dt.year == year_filter) &
-    (df['Region'].isin(region_filter))
+    (df['Region'].isin(region_filter) )&
+    (df['Category'].isin(category_filter))
+     
 ]
 total_sales = filtered_df['Sales'].sum()
 total_profit = filtered_df['Profit'].sum()
@@ -38,6 +49,16 @@ monthly_sales = (
     .reset_index()
 )
 
+def converted_csv(df):
+    return df.to_csv(index=False).encode('utf-8')
+csv_data = converted_csv(filtered_df)
+
+st.download_button(
+    label="Download Filtered Data as CSV",
+    data=csv_data,
+    file_name='filtered_superstore_data.csv',
+    mime='text/csv',
+)
 st.subheader(" Monthly Sales Trend")
 fig1, ax1 = plt.subplots(figsize=(10, 2))
 sns.lineplot(data=monthly_sales, x='YearMonth', y='Sales', marker='o', ax=ax1)
