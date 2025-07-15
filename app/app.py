@@ -4,7 +4,6 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
-import time
 
 
 
@@ -18,8 +17,8 @@ def load_data():
     df['Order Date'] = pd.to_datetime(df['Order Date'])
     df['YearMonth'] = df['Order Date'].dt.to_period('M').astype(str)
     return df
-
 df =load_data()
+
 st.sidebar.header("Filters")
 years = sorted(df['Order Date'].dt.year.unique())
 regions = df['Region'].unique()
