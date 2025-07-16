@@ -1,5 +1,6 @@
 import streamlit as st
 import io
+import os
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -12,7 +13,8 @@ st.title("Superstore Sales Dashboard")
 
 @st.cache_data
 def load_data():
-    path=r"D:\my_git\SuperStore-sales-dahsboard\data\Sample - Superstore.xls"
+    current_dir = os.path.dirname(__file__)
+    path = os.path.normpath(os.path.join(current_dir, '..', 'data', 'Sample - Superstore.xls'))
     df = pd.read_excel(path)
     df['Order Date'] = pd.to_datetime(df['Order Date'])
     df['YearMonth'] = df['Order Date'].dt.to_period('M').astype(str)
