@@ -2,6 +2,5 @@ pandas
 matplotlib
 seaborn
 scikit-learn
-ploty
-os 
-io
+plotly
+
